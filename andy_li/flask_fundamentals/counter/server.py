@@ -4,7 +4,7 @@ app.secret_key = "my_secret_key"
 
 @app.route("/", methods = ["GET", "POST"])
 def index():
-    if session.get("count") is None:
+    if len(session) == 0:
         session["count"] = 0
 
     session["count"] += 1
