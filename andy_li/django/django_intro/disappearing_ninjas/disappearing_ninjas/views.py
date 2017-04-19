@@ -6,23 +6,15 @@ def index(request):
     print "-= Reached / (index.html) =-"
     return render(request, "disappearing_ninjas/index.html")
 
-def ninjas(request, color):
+def ninjas(request, color = "tmnt_all"):
     print "-= Reached /ninjas/<color> =-"
-    if color == "":
-        img = "tmnt_all"
-    elif color == "blue":
-        img = "leo"
-    elif color == "orange":
-        img = "mikey"
-    elif color == "red":
-        img = "raph"
-    elif color == "purple":
-        img = "don"
+    if color in ["blue", "orange", "red", "purple", "tmnt_all"]:
+        img = color
     else:
         img = "april"
 
     data = {
-        "img": img
+        "img": "disappearing_ninjas/img/{}.jpg".format(img)
     }
     print data
     return render(request, "disappearing_ninjas/ninjas.html", data)
