@@ -8,14 +8,13 @@ class UserManager(models.Manager):
         error_msgs = []
         print post_data
 
-        if not 8 <= len(post_data) <= 16:
+        if not 8 <= len(post_data["username"]) <= 16:
             valid = False
             error_msgs.append("Username is invalid and must be between 8 - 16 characters.")
 
-        for user in User.objects.all():
-            if post_data == user.name:
-                valid = False
-                error_msgs.append("Username already used. Please enter a unique username.")
+        if User.objects.filter(name = post_data["username"]):
+            valid = False
+            error_msgs.append("Username already used. Please enter a unique username.")
 
         return (valid, error_msgs)
 

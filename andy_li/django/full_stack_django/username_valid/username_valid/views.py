@@ -16,7 +16,7 @@ def create(request):
     # request method data is post
     else:
         # check if post data passes validate method from models.py
-        check = User.objects.validate(request.POST["username"])
+        check = User.objects.validate(request.POST)
         # if validation fails, generate flash error msgs, redirect to index.html
         if check[0] == False:
             for error in check[1]:
