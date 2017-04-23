@@ -3,6 +3,10 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from models import *
+from django.db.models import Count
+from datetime import datetime
+import pytz
+utc = pytz.utc
 
 def current_user(request):
     return User.objects.get(id = request.session["user_id"])
@@ -39,7 +43,7 @@ def createUser(request):
     return redirect("/secrets")
 
 
-def login(request):
+def loginUser(request):
     print "-= Reached /login (redirect to secrets.html) =-"
     if request.method != "POST":
         return redirect("/")
@@ -58,11 +62,15 @@ def login(request):
 
 def secrets(request):
     print "-= Reached /secrets (secrets.html) =-"
-    # if request.method != "POST":
-    #     return redirect("/")
+    # verify user is registered or logged with session user_id to reach secrets.html
+    if "user_id" not in request.session:
+        return redirect("/")
+
     data = {
         "current_user": current_user(request),
-        "posts": Post.objects.all(),
+        "posts": Post.objects.select_related("user").all().order_by("-created_at")[:5],
+        "current_datetime": datetime.now(tz = utc),
+        "liked_post_ids": User.objects.likedPost_ids(current_user(request)),
     }
 
     return render(request, "dojo_secrets/secrets.html", data)
@@ -87,4 +95,30 @@ def createPost(request):
             post = request.POST["post"],
             user = current_user(request),
         )
+    return redirect("/secrets")
+
+def popular(request):
+    print "-= Reached /secrets/popular (popular.html) =-"
+    data = {
+        "current_user": current_user(request),
+        "posts": Post.objects.select_related("user").all().annotate(num_likes = Count("likes")).order_by("-num_likes")
+    }
+
+    return render(request, "dojo_secrets/popular.html", data)
+
+def likePosts(request, post_id):
+    print "-= Reached /posts/likes/<post_id> (redirect to secrets.html) =-"
+    # increment likes for post by user
+    user = current_user(request)
+    post = Post.objects.get(id = post_id)
+    post.likes.add(user)
+
+    return redirect("/secrets")
+
+def deletePosts(request, post_id):
+    print "-= Reached /posts/delete/<post_id> (redirect to secrets.html) =-"
+    # delete post with specific post_id
+    post = Post.objects.get(id = post_id)
+    post.delete()
+
     return redirect("/secrets")

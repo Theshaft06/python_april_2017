@@ -39,15 +39,6 @@ class UserManager(models.Manager):
 
         return {"pass": False, "errors": "Invalid login credentials."}
 
-    def likedPost_ids(self, user):
-        liked_post_ids = []
-
-        posts = user.posts_liked.all()
-        for post in posts:
-            liked_post_ids.append(post.id)
-
-        return liked_post_ids
-        
 
 class User(models.Model):
     first_name = models.CharField(max_length = 255)
@@ -60,44 +51,3 @@ class User(models.Model):
 
     def __str__(self):
         return "First name: {}, Last name: {}, e-mail: {}, Password: {}".format(self.first_name, self.last_name, self.email, self.password)
-
-
-class PostManager(models.Manager):
-    def validatePost(self, post_data):
-        # verify if post is blank
-        if len(post_data["post"]) < 1:
-            return {"pass": False, "errors": "Post can't be blank."}
-
-        return {"pass": True, "errors": None}
-
-class Post(models.Model):
-    post = models.TextField()
-    user = models.ForeignKey(User, related_name = "posts")
-    likes = models.ManyToManyField(User, related_name = "posts_liked")
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
-    objects = PostManager()
-
-    def __str__(self):
-        return "Post: {}".format(self.post)
-
-
-class CommentManager(models.Manager):
-    def validateComment(self, post_data):
-        # verify if comment is blank
-        if len(post_data["comment"]) < 1:
-            return {"pass": False, "errors": "Comment can't be blank."}
-
-        return {"pass": True, "errors": None}
-
-class Comment(models.Model):
-    comment = models.TextField()
-    user = models.ForeignKey(User, related_name = "comments")
-    post = models.ForeignKey(Post, related_name = "comments")
-    likes = models.ManyToManyField(User, related_name = "comments_liked")
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
-    objects = CommentManager()
-
-    def __str__(self):
-        return "Comment: {}".format(self.comment)
