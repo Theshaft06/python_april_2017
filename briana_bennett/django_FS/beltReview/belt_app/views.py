@@ -55,7 +55,8 @@ def login(request):
 def success(request):
 	context = {
 		'user': current_user(request),
-		'review': Review.objects.select_related('user').all().order_by('-created_at')[:3],
+		'reviews': Review.objects.select_related('user').all().order_by('-created_at')[:3],
+		'other_reviews': Review.objects.all().order_by('-created_at')[4:]
 	}
 	return render(request, 'belt_app/books.html', context)
 
@@ -87,21 +88,45 @@ def add_book(request):
 		rating = request.POST.get('rating'),
 		user = current_user(request),
 		book = book,
-		created_at = request.POST.get('created_at')
 	)
 	#redirect to book page
 	return redirect('/books/{}'.format(book.id))
 
+def add_review(request, id):
+	book = Book.objects.get(id = id)
+	#create reviews
+	review = Review.objects.create(
+		review = request.POST.get('review'),
+		rating = request.POST.get('rating'),
+		user = current_user(request),
+		book = book,
+	)
+	return redirect('/books/{}'.format(book.id))
+
 def show_book(request, id):
 	context = {
+		'current_user': current_user(request),
 		'book': Book.objects.get(id = id),
 		'reviews': Review.objects.filter(book = id)
 	}
-
 	return render(request, 'belt_app/show_book.html', context)
 
+def delete_review(request, id):
+	review = Review.objects.get(id=id)
+	book_id = review.book.id
+	review.delete()
+	return redirect('/books/{}'.format(book_id))
+
 def user(request, id):
-	return render(request, 'belt_app/user.html')
+	context = {
+		'user': User.objects.get(id = id),
+		'reviews': Review.objects.filter(user = id)
+	}
+	return render(request, 'belt_app/user.html', context)
+
+def logout(request):
+	request.session.clear()
+	return redirect('/')
 
 
 

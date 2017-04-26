@@ -8,16 +8,19 @@
 	<a href="/books/new">Add Book and Review</a>
 	<a href="/logout">Logout</a>
 	<h2>Recent Book Reviews:</h2>
-	{% for book in books%}
-		<a href="/book/id"><p>{{review.book.title}}</p></a>
-		<p>{{rating}}</p>
-		<a href="/user/id"><p>{{review.user}}</p>{{review.review}}</p>
-		<p>{{reviews.created_at}}</p>
-	{%endfor%}
+	{% for review in reviews %}
+		<p><a href="/books/{{review.book.id}}">{{review.book.title}}</a></p>
+		<p>rating: {{review.rating}} out of 5<p>
+		<a href="/users/{{review.user.id}}">{{review.user.first_name}}</a> - {{review.review}}<p>
+		<p>Posted at: {{review.created_at}}<p>
+		<hr>
+	{% endfor %}
 
 	<h2>Other Books with Reviews</h2>
 	<div>
-	Add links for books with reviews
+	{% for review in other_reviews %}
+		<a href="/books/{{review.book.id}}">{{review.book.title}}</a>
+	{% endfor %}
 	</div>	
 </body>
 </html>
