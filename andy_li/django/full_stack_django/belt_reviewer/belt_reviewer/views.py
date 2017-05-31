@@ -56,12 +56,12 @@ def books(request):
     if "user_id" not in request.session:
         return redirect("/")
     recent_rev = Review.objects.select_related("book").all().order_by("-created_at")[:3]
-    # other_rev = Review.objects.select_related("book").all().order_by("-created_at")[3:]
+    other_rev = Review.objects.select_related("book").all().order_by("-created_at")[3:]
 
     data = {
         "current_user": current_user(request),
         "reviews": recent_rev,
-        "books": Book.objects.annotate(num_rev = Count("reviews")).filter(num_rev__gte = 1),
+        "other_rev": other_rev,
     }
     return render(request, "belt_reviewer/books.html", data)
 
