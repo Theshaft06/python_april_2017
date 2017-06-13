@@ -1,0 +1,21 @@
+1. pip install Django
+Uses pip to install Django package for Python.
+
+2. pip list
+List installed packages, including editables.
+
+3. pip install Django
+States Django is already installed.
+
+4. pip freeze
+Output installed packages in requirements format.
+pip freeze > requirements.txt creates new .txt file with output of "pip freeze".
+
+5. pip uninstall Django
+Uninstalls Django package.
+
+6. pip show Django
+Show blank output since Django is no longer installed.
+
+7. pip search Flask
+Searches all packages with "flask" in name or description.

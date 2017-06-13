@@ -21,7 +21,7 @@ Please commit daily. That way we can provide you with feedback :) or just a thum
 https://codingdojo-dallas.slack.com/files/katemoc/F427ZQZPY/github_workflow_v4.pdf
 
 # Videos
-Coming Soon...
+[Python - Lists, Dictionaries, & Tuples](https://www.youtube.com/watch?v=iC85adTb8TM&feature=youtu.be "Arrays, Objects, & ...Tuples") <br>
 
 # Schedule
 Coming Soon...
