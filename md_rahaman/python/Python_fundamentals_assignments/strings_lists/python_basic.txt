@@ -1,0 +1,114 @@
+
+#Strings:
+----------
+	name ="Zen" #declaring a variable
+
+	print "My name is",name
+		output[My name is Zen] #note , will put a extra space but not +
+	print ""My name is "+name
+
+
+	interpolation:
+	---------------
+
+		first_name = "Zen"
+		last_name = "Coder"
+		print "My name is {} {}".format(first_name, last_name)
+		output[My name is Zen coder]
+
+
+	Buit-In String Methods:
+	----------------------
+
+		x = "Hello World"
+		print x.capitalize()
+		# output:
+		"HELLO WORLD"
+#List:
+------
+	ninjas = ['Rozen', 'KB', 'Oliver']
+	my_list = ['4', ['list', 'in', 'a', 'list'], 987]
+	empty_list = []
+
+	Accessing veriables:
+	--------------------
+		drawer = ['documents', 'envelopes', 'pens']
+		#access the drawer with index of 0 and print value
+		print drawer[0]  #prints documents
+		#access the drawer with index of 1 and print value
+		print drawer[1] #prints envelopes
+		#access the drawer with index of 2 and print value
+		print drawer[2] #prints pens
+
+	Manipulating Lists:
+	-------------------
+		x = [1,2,3,4,5]
+		x.append(99)
+		print x
+		#the output would be [1,2,3,4,5,99]
+
+		x = [99,4,2,5,-3];
+		print x[:]
+		#the output would be [99,4,2,5,-3]
+		print x[1:]
+		#the output would be [4,2,5,-3];
+		print x[:4]
+		#the output would be [99,4,2,5]
+		print x[2:4]
+		#the output would be [2,5];
+
+		len()
+		-----
+				my_list = [1, 'Zen', 'hi']
+				print len(my_list)
+				# output
+				3
+
+Conditional Expressions:
+------------------------
+	
+	# if statement:
+		if <condition>:
+  	# do something
+	# if-else statement:
+		elif <condition>:
+  	# do something
+		else:
+  	# do this instead
+
+  	Comparison and Logic Operators:
+  	-------------------------------
+  		== : (1==2) is not tuue
+  			 (1==1) is true
+  		!= : (1!=2) is true
+  		<> : (1<>2) similar to != operator
+  		>  : (1>2) is not true
+  		<  : (1<2) is true
+  		>= : (1>=2) is not true
+  		<= : (1<=2) is true
+  		and: (1<=2 and 2<=3) is true
+  		or : (1<=2 or 2>=3) is true
+  		not: not(ture) is false
+
+ #Loops:
+ -------
+ 	for <counter> in <sequence or range>:
+  		# do something
+
+  		ex1:
+  		----
+  			for count in range(0,5):
+				print "loopin - ", count
+
+			output:
+			-------
+				loopin -  0
+				loopin -  1
+				loopin -  2
+				loopin -  3
+				loopin -  4
+
+
+
+
+
